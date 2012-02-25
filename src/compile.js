@@ -268,8 +268,8 @@ var compileNode = function(n) {
 
                 return {
                     path: maxPath,
-                    condition: "if(" + compiledValue + " instanceof " + c.pattern.tag.value +
-                        extraConditions + ") {\n" + getIndent(2) +
+                    condition: (c.pattern.tag.value == '_' ?  "" : "if(" + compiledValue + " instanceof " + c.pattern.tag.value +
+                        extraConditions + ") " ) + "{\n" + getIndent(2) +
                         joinIndent(vars, 2) + "return " + compileNode(c.value) +
                         ";\n" + getIndent(1) + "}"
                 };

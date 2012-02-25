@@ -506,11 +506,14 @@ var analyse = function(node, env, nonGeneric, data, aliases) {
             _.each(node.cases, function(nodeCase) {
                 var newNonGeneric = nonGeneric.slice();
 
-                var tagType = newEnv[nodeCase.pattern.tag.value];
-                if(!tagType) {
-                    throw new Error("Couldn't find the tag: " + nodeCase.pattern.tag.value);
+                var tagValue = nodeCase.pattern.tag.value;
+                if (tagValue != '_') {
+                    var tagType = newEnv[tagValue];
+                    if(!tagType) {
+                        throw new Error("Couldn't find the tag: " + tagValue);
+                    }
+                    unify(value, fresh(prune(tagType), newNonGeneric));
                 }
-                unify(value, fresh(prune(tagType), newNonGeneric));
 
                 var argNames = {};
                 var addVarsToEnv = function(p, lastPath) {

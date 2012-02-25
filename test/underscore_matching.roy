@@ -1,0 +1,6 @@
+let m a = match a
+  case (Left _) = "l"
+  case _ = "r"
+
+console.log (m (Left "a"))
+console.log (m (Right "b"))
