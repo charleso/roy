@@ -82,6 +82,7 @@ var grammar = {
             ["caseList TERMINATOR CASE pattern = expression", "$$ = $1; $1.push(new yy.Case($4, $6));"]
         ],
         "pattern": [
+            ["literal", "$$ = new yy.PatternLiteral($1);"],
             ["innerPattern", "$$ = $1;"],
             ["identifier", "$$ = new yy.Pattern($1, []);"]
         ],

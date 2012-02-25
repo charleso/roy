@@ -266,9 +266,25 @@ var compileNode = function(n) {
                 });
                 var maxPath = maxTagPath ? maxTagPath.path : [];
 
+                var comparison = c.pattern.accept({
+                    visitPattern: function() {
+                        return " instanceof " + c.pattern.tag.value;
+                    },
+                    visitPatternLiteral: function() {
+                        return " == " + compileNode(c.pattern.value);
+                    },
+                });
+                var otherwise = c.pattern.accept({
+                    visitPattern: function() {
+                        return c.pattern.tag.value == '_';
+                    },
+                    visitPatternLiteral: function() {
+                        return false;
+                    },
+                });
                 return {
                     path: maxPath,
-                    condition: (c.pattern.tag.value == '_' ?  "" : "if(" + compiledValue + " instanceof " + c.pattern.tag.value +
+                    condition: (otherwise ?  "" : "if(" + compiledValue + comparison +
                         extraConditions + ") " ) + "{\n" + getIndent(2) +
                         joinIndent(vars, 2) + "return " + compileNode(c.value) +
                         ";\n" + getIndent(1) + "}"

@@ -156,6 +156,15 @@ exports.nodes = {
             }
         };
     },
+    PatternLiteral: function(value) {
+        this.value = value;
+
+        this.accept = function(a) {
+            if(a.visitPatternLiteral) {
+                return a.visitPatternLiteral(this);
+            }
+        };
+    },
     Let: function(name, value, type) {
         this.name = name;
         this.value = value;

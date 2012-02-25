@@ -1,0 +1,15 @@
+let a = match "abc"
+	case "abc" = true
+	case _ = false
+console.log a
+
+let a = match 10
+	case 10 = true
+	case _ = false
+console.log a
+
+// TODO This doesn't actually work!
+let b = match ("a", "b")
+	case ("a", "b") = false
+	case _ = true
+console.log b
